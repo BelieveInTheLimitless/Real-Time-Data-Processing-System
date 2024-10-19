@@ -1,0 +1,7 @@
+SQLAlchemy
+pymysql
+requests
+python-dotenv
+pandas
+matplotlib
+python-dotenv
