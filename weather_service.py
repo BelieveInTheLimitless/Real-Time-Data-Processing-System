@@ -27,21 +27,28 @@ class WeatherService:
     
     @staticmethod
     def calculate_daily_summary(db: Session, city: str, date: datetime):
-        daily_data = db.query(
-            func.avg(WeatherData.temperature).label('avg_temp'),
-            func.max(WeatherData.temperature).label('max_temp'),
-            func.min(WeatherData.temperature).label('min_temp'),
-            WeatherData.main_condition
+        conditions = db.query(
+            WeatherData.main_condition,
+            func.count(WeatherData.main_condition).label('count')
         ).filter(
             WeatherData.city == city,
             func.date(WeatherData.timestamp) == date.date()
-        ).group_by(WeatherData.main_condition).order_by(func.count(WeatherData.main_condition).desc()).limit(1).first()
+        ).group_by(WeatherData.main_condition).order_by(func.count(WeatherData.main_condition).desc()).first()
+
+        temp_stats = db.query(
+            func.avg(WeatherData.temperature).label('avg_temp'),
+            func.max(WeatherData.temperature).label('max_temp'),
+            func.min(WeatherData.temperature).label('min_temp')
+        ).filter(
+            WeatherData.city == city,
+            func.date(WeatherData.timestamp) == date.date()
+        ).first()
 
         return DailySummary(
             city=city,
             date=date,
-            avg_temp=daily_data.avg_temp,
-            max_temp=daily_data.max_temp,
-            min_temp=daily_data.min_temp,
-            dominant_condition=daily_data.main_condition 
+            avg_temp=round(temp_stats.avg_temp, 1) if temp_stats.avg_temp else None,
+            max_temp=temp_stats.max_temp,
+            min_temp=temp_stats.min_temp,
+            dominant_condition=conditions.main_condition if conditions else None
         )
