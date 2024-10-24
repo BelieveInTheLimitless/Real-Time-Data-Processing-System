@@ -1,0 +1,10 @@
+pytest
+pytest-cov
+freezegun
+pytest-mock
+responses
+SQLAlchemy
+pymysql
+requests
+python-dotenv
+pandas

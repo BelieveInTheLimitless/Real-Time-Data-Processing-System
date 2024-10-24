@@ -1,13 +1,31 @@
 services:
   app:
     build: .
+    ports:
+      - "5000:5000"
     environment:
       - MYSQL_HOST=db
       - MYSQL_USER=weather_user
       - MYSQL_PASSWORD=weather_pass
       - MYSQL_DATABASE=weather_db
+      - OPENWEATHERMAP_API_KEY=${OPENWEATHERMAP_API_KEY}
+      - FLASK_ENV=production
+      - TESTING=false
     depends_on:
       - db
+  
+  test:
+    build: .
+    environment:
+      - TESTING=true
+      - MYSQL_HOST=test-db
+      - MYSQL_USER=test_user
+      - MYSQL_PASSWORD=test_pass
+      - MYSQL_DATABASE=test_db
+      - OPENWEATHERMAP_API_KEY=test_key
+    command: pytest -v --cov=.
+    depends_on:
+      - test-db
   
   db:
     image: mysql:latest
@@ -23,6 +41,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  test-db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=test_root_password
+      - MYSQL_USER=test_user
+      - MYSQL_PASSWORD=test_pass
+      - MYSQL_DATABASE=test_db
 
 volumes:
   weather_data:
