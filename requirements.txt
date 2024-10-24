@@ -1,7 +1,9 @@
+flask
+requests
+gunicorn
 SQLAlchemy
 pymysql
-requests
+cryptography
 python-dotenv
 pandas
-matplotlib
 python-dotenv
