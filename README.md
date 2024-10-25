@@ -9,12 +9,11 @@ A real-time data processing system to monitor weather conditions and provide sum
 - [Screenshots](#screenshots)
 
 ## Features
-- The system continuously calls the OpenWeatherMap API at a configurable interval
-(e.g., every 5 minutes) to retrieve real-time weather data for the metros in India. (Delhi, Mumbai, Chennai, Bangalore, Kolkata, Hyderabad)
+- The system continuously calls the OpenWeatherMap API at a configurable interval(e.g., every 5 minutes) to retrieve real-time weather data for the metros in India. (Delhi, Mumbai, Chennai, Bangalore, Kolkata, Hyderabad)
 - Rolls up the weather data for each day
 - Provides daily aggregates for Average temperature, Maximum temperature, Minimum temperature, Dominant weather condition
 - Defines user-configurable thresholds for temperature or specific weather conditions (e.g., alert if temperature exceeds 35 degrees Celsius for two consecutive updates)
-- Displays daily weather summaries, historical trends, and triggered alerts
+- Displays daily weather summaries, historical trends, triggered alerts along with temperature conversion between scales 
 - Defined test cases over System Setup, Data Retrieval, Temperature Conversion, Daily Weather Summary and Alerting Thresholds
   
 ## Technologies Used
@@ -68,8 +67,4 @@ docker compose down
 ```
 
 ## Screenshots
-![Screenshot from 2024-10-24 19-09-10](https://github.com/user-attachments/assets/3e763c8d-0cdb-48c7-a015-57d280412060)
-
-
-
-
+![Screenshot from 2024-10-25 19-32-47](https://github.com/user-attachments/assets/49d68e69-b7fb-41ff-88b9-5b1f9281ac41)
